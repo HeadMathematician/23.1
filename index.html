@@ -11,6 +11,7 @@
 </head>
 
 <body>
+    <h1 id="score">SCORE</h1>
     <div class="kocka">
         <div class="row">
             <div class="box"></div>
@@ -40,20 +41,45 @@
 
     <script>
         let boxes = document.querySelectorAll('.box');
+        let scoreNaslov = document.querySelector('#score');
+        let score = 0;
+        scoreNaslov.innerHTML = score;
         console.log(boxes);
+        //TO DO 
+        let memo = [
+            [1, 1, 2, 2],
+            [3, 3, 4, 4],
+            [5, 5, 6, 6],
+            [7, 7, 8, 8]
+        ]
 
-        let polje = [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]];
-        // polje[0] = [1, 2, 3, 4];
-        // polje[1] = [5, 6, 7, 8];
-        // polje[2] = [9, 10, 11, 12];
-        // polje[3] = [13, 14, 15, 16];
+        let prviIzbor = -1;
+        let drugiIzbor = -2;
 
 
+        for (let i = 0; i < boxes.length; i++) {
+            boxes[i].addEventListener('click', function () {
+                boxes[i].innerHTML = memo[Math.floor(i / 4)][i % 4]
+                if (prviIzbor == -1) {
+                    prviIzbor = memo[Math.floor(i / 4)][i % 4];
+                }
+                else {
+                    drugiIzbor = memo[Math.floor(i / 4)][i % 4];
+                }
 
-        for (let i = 0; i < polje.length; i++) {
-            for (let j = 0; j < polje[i].length; j++) {
-                console.log(polje[i][j]);
-            }
+                if (prviIzbor != -1 && drugiIzbor != -2 && prviIzbor == drugiIzbor) {
+                    console.log('Jednaki su');
+                    prviIzbor = -1;
+                    drugiIzbor = -2;
+                    scoreNaslov.innerHTML = ++score;
+                }
+                else if (prviIzbor != -1 && drugiIzbor != -2) {
+                    console.log('Nisu jednaki')
+                    prviIzbor = -1;
+                    drugiIzbor = -2;
+                    console.log(score);
+                }
+            })
         }
     </script>
 </body>
